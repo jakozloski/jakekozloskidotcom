@@ -37,10 +37,17 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             if (response.ok) {
-                showMessage('Thanks for requesting a seat! You\'ll receive confirmation and dinner details soon.', 'success');
-                form.reset();
+                const result = await response.json();
+                if (result.success) {
+                    showMessage('Thanks for requesting a seat! You\'ll receive confirmation and dinner details soon.', 'success');
+                    form.reset();
+                } else {
+                    throw new Error(result.message || 'Server returned an error');
+                }
             } else {
-                throw new Error('Network response was not ok');
+                const errorText = await response.text();
+                console.error('Response error:', response.status, errorText);
+                throw new Error(`Server error: ${response.status}`);
             }
         } catch (error) {
             console.error('Error:', error);
