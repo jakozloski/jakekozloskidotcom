@@ -19,7 +19,12 @@ function doPost(e) {
       console.error('Invalid request: missing postData');
       return ContentService
         .createTextOutput(JSON.stringify({success: false, message: 'Invalid request format'}))
-        .setMimeType(ContentService.MimeType.JSON);
+        .setMimeType(ContentService.MimeType.JSON)
+        .setHeaders({
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST',
+          'Access-Control-Allow-Headers': 'Content-Type'
+        });
     }
     
     // Parse the incoming data
@@ -37,7 +42,12 @@ function doPost(e) {
     // Return success response
     return ContentService
       .createTextOutput(JSON.stringify({success: true, message: 'Form submitted successfully'}))
-      .setMimeType(ContentService.MimeType.JSON);
+      .setMimeType(ContentService.MimeType.JSON)
+      .setHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      });
       
   } catch (error) {
     console.error('Error processing form submission:', error);
@@ -45,7 +55,12 @@ function doPost(e) {
     // Return error response
     return ContentService
       .createTextOutput(JSON.stringify({success: false, message: 'Error processing submission'}))
-      .setMimeType(ContentService.MimeType.JSON);
+      .setMimeType(ContentService.MimeType.JSON)
+      .setHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      });
   }
 }
 
@@ -202,9 +217,24 @@ function testFormSubmission() {
   }
 }
 
+// Handle CORS preflight requests
+function doOptions(e) {
+  return ContentService
+    .createTextOutput('')
+    .setMimeType(ContentService.MimeType.TEXT)
+    .setHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    });
+}
+
 // Handle CORS for web requests
 function doGet(e) {
   return ContentService
     .createTextOutput('Dinner signup webhook is running')
-    .setMimeType(ContentService.MimeType.TEXT);
+    .setMimeType(ContentService.MimeType.TEXT)
+    .setHeaders({
+      'Access-Control-Allow-Origin': '*'
+    });
 } 

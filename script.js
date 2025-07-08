@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Log form submission for debugging
             console.log('Form submission:', data);
+            console.log('Webhook URL:', WEBHOOK_URL);
             
             const response = await fetch(WEBHOOK_URL, {
                 method: 'POST',
@@ -35,6 +36,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify(data)
             });
+            
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
             
             if (response.ok) {
                 const result = await response.json();
@@ -51,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.error('Error:', error);
+            console.error('Error details:', error.message);
             showMessage('There was an error submitting your signup. Please try again or email jakozloski@gmail.com directly.', 'error');
         } finally {
             // Reset button
