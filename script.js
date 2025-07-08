@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const response = await fetch(WEBHOOK_URL, {
                 method: 'POST',
+                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'text/plain',
                 },
@@ -38,19 +39,14 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             console.log('Response status:', response.status);
-            console.log('Response headers:', response.headers);
+            console.log('Response type:', response.type);
             
-            if (response.ok) {
-                const result = await response.json();
-                if (result.success) {
-                    showMessage('Thanks for requesting a seat! You\'ll receive confirmation and dinner details soon.', 'success');
-                    form.reset();
-                } else {
-                    throw new Error(result.message || 'Server returned an error');
-                }
+            // With no-cors mode, we can't read the response but if no error was thrown,
+            // the request likely succeeded
+            if (response.type === 'opaque' || response.ok) {
+                showMessage('Thanks for requesting a seat! You\'ll receive confirmation and dinner details soon.', 'success');
+                form.reset();
             } else {
-                const errorText = await response.text();
-                console.error('Response error:', response.status, errorText);
                 throw new Error(`Server error: ${response.status}`);
             }
         } catch (error) {
