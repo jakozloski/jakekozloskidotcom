@@ -23,16 +23,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         try {
             // Replace this URL with your Google Apps Script webhook URL
-            const WEBHOOK_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+            const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyTunbSUetNnewwl3cT-t1KeN09HgRBTsucbr0Q3ndHnE8DvIDjsd2JcW8Ebaf6djCR/exec';
             
-            // Check if webhook is configured
-            if (WEBHOOK_URL.includes('YOUR_SCRIPT_ID')) {
-                // Fallback: Show success message and log to console for testing
-                console.log('Form submission (webhook not configured):', data);
-                showMessage('Demo mode: Form submitted successfully! Configure Google Apps Script webhook to enable real functionality.', 'success');
-                form.reset();
-                return;
-            }
+            // Log form submission for debugging
+            console.log('Form submission:', data);
             
             const response = await fetch(WEBHOOK_URL, {
                 method: 'POST',
@@ -43,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             if (response.ok) {
-                showMessage('Thanks for signing up! You\'ll receive confirmation and dinner details soon.', 'success');
+                showMessage('Thanks for requesting a seat! You\'ll receive confirmation and dinner details soon.', 'success');
                 form.reset();
             } else {
                 throw new Error('Network response was not ok');
