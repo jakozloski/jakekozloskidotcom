@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Show loading state
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Signing up...';
+        submitBtn.textContent = 'Requesting...';
         messageDiv.style.display = 'none';
         
         // Get form data
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } finally {
             // Reset button
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Sign Up for Dinners';
+            submitBtn.textContent = 'Request a Seat';
         }
     });
 
