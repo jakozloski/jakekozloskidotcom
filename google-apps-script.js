@@ -140,14 +140,14 @@ This email was automatically generated from your dinner signup form.
  */
 function sendConfirmationEmail(data) {
   try {
-    const subject = 'Thanks for signing up for NYC Consumer Dinners!';
+    const subject = 'Thanks for requesting a seat at an upcoming NYC Consumer Dinner!';
     
     const body = `
 Hi ${data.name},
 
-Thanks for signing up for the NYC Consumer Dinners! 
+Thanks for requesting a seat at an upcoming NYC Consumer Dinner!
 
-I host monthly dinners bringing together consumer founders and investors in NYC. You'll receive an email with details about the next dinner soon.
+I host monthly dinners bringing together consumer founders and investors in NYC. If selected for an upcoming dinner, you'll receive an email with details.
 
 In the meantime, feel free to reach out if you have any questions.
 
@@ -157,8 +157,7 @@ Jake
 ---
 Jake Kozloski
 Founder & CEO, Keeper
-jakozloski@gmail.com
-https://jakekozloski.com
+jakekozloski.com
     `;
     
     GmailApp.sendEmail(data.email, subject, body);
