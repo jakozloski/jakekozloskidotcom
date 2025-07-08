@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // With no-cors mode, we can't read the response but if no error was thrown,
             // the request likely succeeded
             if (response.type === 'opaque' || response.ok) {
-                showMessage('Thanks for requesting a seat! You\'ll receive confirmation and dinner details soon.', 'success');
+                showMessage('Thanks for requesting a seat! If selected, you\'ll receive an email with details soon.', 'success');
                 form.reset();
             } else {
                 throw new Error(`Server error: ${response.status}`);
