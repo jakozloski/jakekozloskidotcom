@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const response = await fetch(WEBHOOK_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'text/plain',
                 },
                 body: JSON.stringify(data)
             });
