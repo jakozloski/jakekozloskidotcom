@@ -3,7 +3,7 @@
 
 // Configuration - Update these values
 const CONFIG = {
-  SHEET_ID: 'YOUR_GOOGLE_SHEET_ID', // Replace with your Google Sheet ID
+  SHEET_ID: '1znn_kPmePRWOMHeHs-HZZ_mqHIYPBFQGJQHIlK-UpEo', // Your Google Sheet ID
   SHEET_NAME: 'Dinner Signups', // Name of the sheet tab
   NOTIFICATION_EMAIL: 'jakozloski@gmail.com', // Your email for notifications
   SUBJECT_LINE: 'New NYC Dinner Signup'
@@ -14,6 +14,14 @@ const CONFIG = {
  */
 function doPost(e) {
   try {
+    // Check if postData exists (for proper HTTP POST requests)
+    if (!e || !e.postData || !e.postData.contents) {
+      console.error('Invalid request: missing postData');
+      return ContentService
+        .createTextOutput(JSON.stringify({success: false, message: 'Invalid request format'}))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    
     // Parse the incoming data
     const data = JSON.parse(e.postData.contents);
     
@@ -168,7 +176,7 @@ function testFormSubmission() {
   const testData = {
     timestamp: new Date().toISOString(),
     name: 'Test User',
-    email: 'test@example.com',
+    email: 'jakozloski@gmail.com', // Use your email for testing
     company: 'Test Company',
     role: 'founder',
     x_handle: '@testuser',
@@ -177,11 +185,21 @@ function testFormSubmission() {
   };
   
   try {
+    console.log('Testing sheet write...');
     writeToSheet(testData);
+    console.log('Sheet write successful!');
+    
+    console.log('Testing notification email...');
     sendNotificationEmail(testData);
-    console.log('Test completed successfully!');
+    console.log('Notification email sent!');
+    
+    console.log('Testing confirmation email...');
+    sendConfirmationEmail(testData);
+    console.log('Confirmation email sent!');
+    
+    console.log('✅ All tests completed successfully!');
   } catch (error) {
-    console.error('Test failed:', error);
+    console.error('❌ Test failed:', error);
   }
 }
 
